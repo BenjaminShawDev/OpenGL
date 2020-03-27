@@ -34,6 +34,7 @@ private:
 	Camera* camera;
 	//Cube* cube[200];
 	SceneObject* objects[1000];
+	SceneObject* ship;
 	Vector4* _lightPosition;
 	Lighting* _lightData;
 	Material* _material;

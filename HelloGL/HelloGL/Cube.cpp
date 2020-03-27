@@ -6,7 +6,7 @@ Cube::Cube(Mesh* mesh, Texture2D* texture, float x, float y, float z) : SceneObj
 	_position.x = x;
 	_position.y = y;
 	_position.z = z;
-	//_translate = 0.0f;
+	_objectAcceleration = 0.1f;
 }
 
 Cube::~Cube()
@@ -40,10 +40,27 @@ void Cube::Draw()
 
 void Cube::Update()
 {
-	_rotation += 0.1f;
+	//_rotation += 0.1f; Add back at some point
+	_position.z += _objectAcceleration;
+	_objectAcceleration += 0.001f;
+}
+
+void Cube::moveUp()
+{
+	_position.y -= 0.1f;
 }
 
 void Cube::moveLeft()
 {
+	_position.x += 0.1f;
+}
+
+void Cube::moveRight()
+{
 	_position.x -= 0.1f;
+}
+
+void Cube::moveDown()
+{
+	_position.y += 0.1f;
 }

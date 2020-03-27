@@ -21,14 +21,19 @@ HelloGL::~HelloGL(void)
 void HelloGL::InitObjects()
 {
 	camera = new Camera();
-	Mesh* cubeMesh = MeshLoader::Load((char*)"TestShape.txt");
+	Mesh* cubeMesh = MeshLoader::Load((char*)"Cube.txt");
 	Texture2D* texture = new Texture2D();
 	texture->Load((char*)"Penguins.raw", 512, 512);
 
 	for (int i = 0; i < 500; i++)
 	{
-		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, - (rand() % 1000) / 10.0f);
+		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, - (rand() % 10000) / 10.0f);
 	}
+
+	Mesh* shipMesh = MeshLoader::Load((char*)"TestShape.txt");
+	Texture2D* texture2 = new Texture2D();
+	ship = new Cube(shipMesh, texture, 0, 0, - 10);
+
 	camera->eye.x = 0.0f; camera->eye.y = 0.0f; camera->eye.z = 1.0f;
 	//camera->eye.x = 5.0f; camera->eye.y = 5.0f; camera->eye.z = -5.0f;
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
@@ -108,6 +113,7 @@ void HelloGL::Display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clears the scene
 	for (int i = 0; i < 200; i++)
 		objects[i]->Draw();
+	ship->Draw();
 
 	Vector3 v = { -1.4f, 0.7f, -1.0f };
 	Color c = { 0.0f, 1.0f, 0.0f };
@@ -123,6 +129,7 @@ void HelloGL::Update()
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 	for (int i = 0; i < 200; i++)
 		objects[i]->Update();
+	ship->Update();
 	glutPostRedisplay();
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
 	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
@@ -132,30 +139,39 @@ void HelloGL::Update()
 
 void HelloGL::Keyboard(unsigned char key, int x, int y)
 {
+	
 	if (key == 'w')
-	{
-		cout << "Forward" << endl;
-		cube->moveLeft();
+	{		
+		for (int i = 0; i < 500; i++)
+		{
+			dynamic_cast<Cube*>(objects[i])->moveUp();
+		}
+
+		//cube->moveLeft();
 	}
 
-	else if (key == 's')
+	if (key == 's')
 	{
-		cout << "Backward" << endl;
+		for (int i = 0; i < 500; i++)
+		{
+			dynamic_cast<Cube*>(objects[i])->moveDown();
+		}
 	}
 
-	else if (key == 'a')
+	if (key == 'a')
 	{
-		cout << "Left" << endl;
+		for (int i = 0; i < 500; i++)
+		{
+			dynamic_cast<Cube*>(objects[i])->moveLeft();
+		}
 	}
 
-	else if (key == 'd')
+	if (key == 'd')
 	{
-		cout << "Right" << endl;
-	}
-
-	else
-	{
-		cout << "Still" << endl;
+		for (int i = 0; i < 500; i++)
+		{
+			dynamic_cast<Cube*>(objects[i])->moveRight();
+		}
 	}
 }
 

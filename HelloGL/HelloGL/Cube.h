@@ -17,8 +17,7 @@ private:
 	//static int numVertices, numColors, numIndices;
 	GLfloat _rotation;
 	//Vector3 _position;
-	HelloGL* hellogl;
-	float _translateX, _translateY;
+	GLfloat _objectAcceleration;
 public:
 	//static bool Load(char* path);
 
@@ -27,7 +26,10 @@ public:
 
 	void Draw();
 	void Update();
+	void moveUp();
 	void moveLeft();
+	void moveRight();
+	void moveDown();
 
 	Vector3 _position;
 };

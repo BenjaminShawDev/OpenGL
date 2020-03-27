@@ -2,25 +2,25 @@
   GLUTCallbacks.cpp
   HelloGL.cpp
 C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(7,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(74,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(75,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(76,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(78,29): warning C4305:  '=': truncation from 'double' to 'float'
 C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(79,29): warning C4305:  '=': truncation from 'double' to 'float'
 C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(80,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(82,30): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(83,30): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(84,30): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(91,28): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(91,56): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(91,84): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(92,28): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(92,56): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(81,29): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(83,29): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(84,29): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(85,29): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(87,30): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(88,30): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(89,30): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(96,28): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(96,56): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(96,84): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(97,28): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(97,56): warning C4305:  '=': truncation from 'double' to 'float'
   main.cpp
   MeshLoader.cpp
   SceneObject.cpp
   Pyramid.cpp
   Texture2D.cpp
   Generating Code...
-C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(92,84): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\HelloGL\HelloGL.cpp(97,84): warning C4305:  '=': truncation from 'double' to 'float'
   HelloGL.vcxproj -> C:\Users\Ben\Documents\GitHub\OpenGL\HelloGL\Debug\HelloGL.exe
