@@ -9,6 +9,7 @@
 #include "Cube.h"
 #include "MeshLoader.h"
 #include "Pyramid.h"
+#include "PlayerShip.h"
 
 class Cube;
 

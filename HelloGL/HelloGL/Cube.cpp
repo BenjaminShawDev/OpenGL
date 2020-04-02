@@ -40,7 +40,7 @@ void Cube::Draw()
 
 void Cube::Update()
 {
-	//_rotation += 0.1f; Add back at some point
+	_rotation += 0.1f; //Add back at some point
 	_position.z += _objectAcceleration;
 	_objectAcceleration += 0.001f;
 }

@@ -127,6 +127,7 @@
     <ClInclude Include="GLUTCallbacks.h" />
     <ClInclude Include="HelloGL.h" />
     <ClInclude Include="MeshLoader.h" />
+    <ClInclude Include="PlayerShip.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Pyramid.h" />
     <ClInclude Include="Structures.h" />
@@ -138,6 +139,7 @@
     <ClCompile Include="HelloGL.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
+    <ClCompile Include="PlayerShip.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="Texture2D.cpp" />

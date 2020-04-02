@@ -16,7 +16,7 @@ class Cube : public SceneObject
 private:
 	//static int numVertices, numColors, numIndices;
 	GLfloat _rotation;
-	//Vector3 _position;
+	Vector3 _position;
 	GLfloat _objectAcceleration;
 public:
 	//static bool Load(char* path);
@@ -30,7 +30,5 @@ public:
 	void moveLeft();
 	void moveRight();
 	void moveDown();
-
-	Vector3 _position;
 };
 

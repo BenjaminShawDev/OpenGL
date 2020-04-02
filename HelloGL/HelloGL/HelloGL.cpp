@@ -21,23 +21,24 @@ HelloGL::~HelloGL(void)
 void HelloGL::InitObjects()
 {
 	camera = new Camera();
-	Mesh* cubeMesh = MeshLoader::Load((char*)"Cube.txt");
-	Texture2D* texture = new Texture2D();
-	texture->Load((char*)"Penguins.raw", 512, 512);
-
-	for (int i = 0; i < 500; i++)
-	{
-		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, - (rand() % 10000) / 10.0f);
-	}
-
-	Mesh* shipMesh = MeshLoader::Load((char*)"TestShape.txt");
-	Texture2D* texture2 = new Texture2D();
-	ship = new Cube(shipMesh, texture, 0, 0, - 10);
 
 	camera->eye.x = 0.0f; camera->eye.y = 0.0f; camera->eye.z = 1.0f;
 	//camera->eye.x = 5.0f; camera->eye.y = 5.0f; camera->eye.z = -5.0f;
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
+
+	Mesh* cubeMesh = MeshLoader::Load((char*)"Cube.txt");
+	Texture2D* texture = new Texture2D();
+	texture->Load((char*)"Asteroid.raw", 512, 512);
+	for (int i = 0; i < 500; i++)
+	{
+		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 10000) / 10.0f);
+	}
+
+	Mesh* shipMesh = MeshLoader::Load((char*)"TestShape.txt");
+	Texture2D* shipTexture = new Texture2D();
+	shipTexture->Load((char*)"Penguins.raw", 512, 512);
+	ship = new PlayerShip(shipMesh, shipTexture, 0, 0, -10);
 }
 
 void HelloGL::InitGL(int argc, char* argv[])
@@ -112,7 +113,9 @@ void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clears the scene
 	for (int i = 0; i < 200; i++)
+	{
 		objects[i]->Draw();
+	}
 	ship->Draw();
 
 	Vector3 v = { -1.4f, 0.7f, -1.0f };
@@ -146,8 +149,6 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 		{
 			dynamic_cast<Cube*>(objects[i])->moveUp();
 		}
-
-		//cube->moveLeft();
 	}
 
 	if (key == 's')
