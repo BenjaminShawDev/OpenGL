@@ -115,6 +115,4 @@ namespace MeshLoader
 
 		return mesh;
 	}
-
-	
 }

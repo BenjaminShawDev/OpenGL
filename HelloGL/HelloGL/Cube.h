@@ -26,9 +26,5 @@ public:
 
 	void Draw();
 	void Update();
-	void moveUp();
-	void moveLeft();
-	void moveRight();
-	void moveDown();
 };
 

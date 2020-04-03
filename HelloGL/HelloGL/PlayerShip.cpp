@@ -1,10 +1,10 @@
 #include "PlayerShip.h"
 
-
-
 PlayerShip::PlayerShip(Mesh* mesh, Texture2D* texture, float x, float y, float z) : SceneObject(mesh, texture)
 {
-
+	_position.x = x;
+	_position.y = y;
+	_position.z = z;
 }
 
 PlayerShip::~PlayerShip()
@@ -25,7 +25,7 @@ void PlayerShip::Draw()
 
 		glPushMatrix();
 		glTranslatef(_position.x, _position.y, _position.z);
-		glRotatef(_rotation, 1.0f, 1.0f, 0.0f);
+		//glRotatef(_rotation, 1.0f, 1.0f, 0.0f);
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, _mesh->Indices);
 		glPopMatrix();
 
@@ -37,4 +37,24 @@ void PlayerShip::Draw()
 void PlayerShip::Update()
 {
 
+}
+
+void PlayerShip::moveUp()
+{
+	_position.y += MOVEMENT_SPEED;
+}
+
+void PlayerShip::moveLeft()
+{
+	_position.x -= MOVEMENT_SPEED;
+}
+
+void PlayerShip::moveRight()
+{
+	_position.x += MOVEMENT_SPEED;
+}
+
+void PlayerShip::moveDown()
+{
+	_position.y -= MOVEMENT_SPEED;
 }

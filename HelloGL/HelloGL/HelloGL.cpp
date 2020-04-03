@@ -27,17 +27,17 @@ void HelloGL::InitObjects()
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
 
-	Mesh* cubeMesh = MeshLoader::Load((char*)"Cube.txt");
+	Mesh* cubeMesh = MeshLoader::Load((char*)"ObjectFiles/Cube.txt");
 	Texture2D* texture = new Texture2D();
-	texture->Load((char*)"Asteroid.raw", 512, 512);
+	texture->Load((char*)"Textures/Asteroid.raw", 512, 512);
 	for (int i = 0; i < 500; i++)
 	{
 		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 10000) / 10.0f);
 	}
 
-	Mesh* shipMesh = MeshLoader::Load((char*)"TestShape.txt");
+	Mesh* shipMesh = MeshLoader::Load((char*)"ObjectFiles/TestShape.txt");
 	Texture2D* shipTexture = new Texture2D();
-	shipTexture->Load((char*)"Penguins.raw", 512, 512);
+	shipTexture->Load((char*)"Textures/ShipTexture.raw", 512, 512);
 	ship = new PlayerShip(shipMesh, shipTexture, 0, 0, -10);
 }
 
@@ -143,36 +143,56 @@ void HelloGL::Update()
 void HelloGL::Keyboard(unsigned char key, int x, int y)
 {
 	
+	//if (key == 'w')
+	//{		
+	//	for (int i = 0; i < 500; i++)
+	//	{
+	//		dynamic_cast<Cube*>(objects[i])->moveUp();
+	//	}
+	//}
+
+	//if (key == 's')
+	//{
+	//	for (int i = 0; i < 500; i++)
+	//	{
+	//		dynamic_cast<Cube*>(objects[i])->moveDown();
+	//	}
+	//}
+
+	//if (key == 'a')
+	//{
+	//	for (int i = 0; i < 500; i++)
+	//	{
+	//		dynamic_cast<Cube*>(objects[i])->moveLeft();
+	//	}
+	//}
+
+	//if (key == 'd')
+	//{
+	//	for (int i = 0; i < 500; i++)
+	//	{
+	//		dynamic_cast<Cube*>(objects[i])->moveRight();
+	//	}
+	//}
+
 	if (key == 'w')
-	{		
-		for (int i = 0; i < 500; i++)
-		{
-			dynamic_cast<Cube*>(objects[i])->moveUp();
-		}
+	{
+		dynamic_cast<PlayerShip*>(ship)->moveUp();
 	}
 
 	if (key == 's')
 	{
-		for (int i = 0; i < 500; i++)
-		{
-			dynamic_cast<Cube*>(objects[i])->moveDown();
-		}
+		dynamic_cast<PlayerShip*>(ship)->moveDown();
 	}
 
 	if (key == 'a')
 	{
-		for (int i = 0; i < 500; i++)
-		{
-			dynamic_cast<Cube*>(objects[i])->moveLeft();
-		}
+		dynamic_cast<PlayerShip*>(ship)->moveLeft();
 	}
 
 	if (key == 'd')
 	{
-		for (int i = 0; i < 500; i++)
-		{
-			dynamic_cast<Cube*>(objects[i])->moveRight();
-		}
+		dynamic_cast<PlayerShip*>(ship)->moveRight();
 	}
 }
 
