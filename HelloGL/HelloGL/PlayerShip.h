@@ -17,6 +17,8 @@ class PlayerShip : public SceneObject
 {
 private:
 	GLfloat _rotation;
+	GLfloat _zRotation;
+	GLfloat _xRotation;
 	Vector3 _position;
 public:
 	PlayerShip(Mesh* mesh, Texture2D* texture, float x, float y, float z);
@@ -28,5 +30,9 @@ public:
 	void moveLeft();
 	void moveRight();
 	void moveDown();
+
+	float getXPosition();
+	float getYPosition();
+	float getZPosition();
 };
 

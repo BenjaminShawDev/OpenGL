@@ -10,6 +10,8 @@
 #include "MeshLoader.h"
 #include "Pyramid.h"
 #include "PlayerShip.h"
+#include "StarBackground.h"
+#include <string>
 
 class Cube;
 
@@ -28,16 +30,27 @@ public:
 	void InitLighting();
 	void LightingMaterial();
 	void DrawString(const char* text, Vector3* position, Color* color);
+	void CollisionDetection();
 
 	bool _move;
 
 private:
 	Camera* camera;
 	//Cube* cube[200];
-	SceneObject* objects[1000];
+	SceneObject* objects[500];
 	SceneObject* ship;
+	SceneObject* background;
 	Vector4* _lightPosition;
 	Lighting* _lightData;
 	Material* _material;
 	Cube* cube;
+
+	bool startGame;
+	bool isPlayerDead;
+	int score;
+
+	bool wKeyDown = false;
+	bool aKeyDown = false;
+	bool dKeyDown = false;
+	bool sKeyDown = false;
 };

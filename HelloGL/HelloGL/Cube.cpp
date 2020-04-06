@@ -42,5 +42,23 @@ void Cube::Update()
 {
 	_rotation += 0.1f;
 	_position.z += _objectAcceleration;
-	_objectAcceleration += 0.001f;
+	_objectAcceleration += 0.0005f;
+
+	if (_position.z > 150.f)
+		_position.z = -600.0f;
+}
+
+float Cube::getXPosition()
+{
+	return _position.x;
+}
+
+float Cube::getYPosition()
+{
+	return _position.y;
+}
+
+float Cube::getZPosition()
+{
+	return _position.z;
 }

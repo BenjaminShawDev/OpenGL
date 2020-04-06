@@ -26,5 +26,9 @@ public:
 
 	void Draw();
 	void Update();
+
+	float getXPosition();
+	float getYPosition();
+	float getZPosition();
 };
 
