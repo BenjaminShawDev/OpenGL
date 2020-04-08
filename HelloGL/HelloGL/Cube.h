@@ -18,6 +18,8 @@ private:
 	GLfloat _rotation;
 	Vector3 _position;
 	GLfloat _objectAcceleration;
+
+	float powerUpTimer;
 public:
 	//static bool Load(char* path);
 
@@ -26,6 +28,7 @@ public:
 
 	void Draw();
 	void Update();
+	void PowerUpAsteroid();
 
 	float getXPosition();
 	float getYPosition();

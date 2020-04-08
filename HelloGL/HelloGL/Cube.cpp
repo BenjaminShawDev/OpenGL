@@ -7,6 +7,7 @@ Cube::Cube(Mesh* mesh, Texture2D* texture, float x, float y, float z) : SceneObj
 	_position.y = y;
 	_position.z = z;
 	_objectAcceleration = 0.1f;
+	powerUpTimer = 100;
 }
 
 Cube::~Cube()
@@ -45,7 +46,16 @@ void Cube::Update()
 	_objectAcceleration += 0.0005f;
 
 	if (_position.z > 150.f)
+	{
+		_position.x = ((rand() % 400) / 10.0f) - 20.0f;
+		_position.y = ((rand() % 200) / 10.0f) - 10.0f;
 		_position.z = -600.0f;
+	}
+}
+
+void Cube::PowerUpAsteroid()
+{
+	_position.z += 7.5f;
 }
 
 float Cube::getXPosition()

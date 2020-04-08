@@ -6,4 +6,3 @@ namespace MeshLoader
 {
 	Mesh* Load(char* path);
 };
-

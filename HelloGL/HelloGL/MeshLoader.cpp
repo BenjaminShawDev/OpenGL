@@ -1,6 +1,7 @@
 #include "MeshLoader.h"
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
@@ -107,6 +108,7 @@ namespace MeshLoader
 			return nullptr;
 		}
 
+
 		LoadVertices(inFile, mesh);
 		//LoadColours(inFile, mesh);
 		LoadTexCoords(inFile, mesh);
@@ -114,5 +116,10 @@ namespace MeshLoader
 		LoadIndices(inFile, mesh);
 
 		return mesh;
+	}
+
+	void testLoader()
+	{
+
 	}
 }

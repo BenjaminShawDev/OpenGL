@@ -11,6 +11,8 @@
 #include "Pyramid.h"
 #include "PlayerShip.h"
 #include "StarBackground.h"
+#include "StartUpBackground.h"
+#include "PowerUp.h"
 #include <string>
 
 class Cube;
@@ -31,15 +33,18 @@ public:
 	void LightingMaterial();
 	void DrawString(const char* text, Vector3* position, Color* color);
 	void CollisionDetection();
+	void RestartGame();
 
 	bool _move;
 
 private:
 	Camera* camera;
 	//Cube* cube[200];
-	SceneObject* objects[500];
+	SceneObject* asteroids[500];
+	SceneObject* powerUps[3];
 	SceneObject* ship;
 	SceneObject* background;
+	SceneObject* startUpBackground;
 	Vector4* _lightPosition;
 	Lighting* _lightData;
 	Material* _material;
@@ -47,7 +52,12 @@ private:
 
 	bool startGame;
 	bool isPlayerDead;
+	bool isPaused;
+	bool doRestart;
+	bool powerUpActive;
+	int scoreTime;
 	int score;
+	int powerUpTimer;
 
 	bool wKeyDown = false;
 	bool aKeyDown = false;

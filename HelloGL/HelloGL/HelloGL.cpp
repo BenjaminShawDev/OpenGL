@@ -9,10 +9,15 @@ HelloGL::HelloGL(int argc, char* argv[])
 	InitObjects();
 	InitLighting();
 	LightingMaterial();
-	
+
 	startGame = false;
 	isPlayerDead = false;
-	int score = 0;
+	isPaused = false;
+	doRestart = false;
+	powerUpActive = false;
+	score = 0;
+	scoreTime = 0;
+	powerUpTimer = 5000;
 
 	glutMainLoop();
 }
@@ -31,6 +36,11 @@ void HelloGL::InitObjects()
 	camera->center.x = 0.0f; camera->center.y = 0.0f; camera->center.z = 0.0f;
 	camera->up.x = 0.0f; camera->up.y = 1.0f; camera->up.z = 0.0f;
 
+	Mesh* startUpBackgroundMesh = MeshLoader::Load((char*)"ObjectFiles/Menu.txt");
+	Texture2D* startUpBackgroundTexture = new Texture2D();
+	startUpBackgroundTexture->Load((char*)"Textures/Menu2.raw", 512, 512);
+	startUpBackground = new StartUpBackground(startUpBackgroundMesh, startUpBackgroundTexture, 0, 0, -65);
+
 	Mesh* backgroundMesh = MeshLoader::Load((char*)"ObjectFiles/Background.txt");
 	Texture2D* backgroundTexture = new Texture2D();
 	backgroundTexture->Load((char*)"Textures/Space.raw", 1024, 1024);
@@ -41,7 +51,15 @@ void HelloGL::InitObjects()
 	texture->Load((char*)"Textures/Asteroid.raw", 512, 512);
 	for (int i = 0; i < 500; i++)
 	{
-		objects[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 10000) / 10.0f);
+		asteroids[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 10000) / 10.0f);
+	}
+
+	Mesh* powerUpMesh = MeshLoader::Load((char*)"ObjectFiles/PowerUp.txt");
+	Texture2D* powerUpTexture = new Texture2D();
+	powerUpTexture->Load((char*)"Textures/PowerUp.raw", 512, 512);
+	for (int i = 0; i < 3; i++)
+	{
+		powerUps[i] = new PowerUp(powerUpMesh, powerUpTexture, ((rand() % 80) / 10.0f) - 4.0f, ((rand() % 70) / 10.0f) - 3.5f, -(rand() % 10000) / 10.0f);
 	}
 
 	Mesh* shipMesh = MeshLoader::Load((char*)"ObjectFiles/TestShape.txt");
@@ -56,8 +74,8 @@ void HelloGL::InitGL(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(800, 800);
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Simple OpenGL Program");
+	glutInitWindowPosition(500, 300);
+	glutCreateWindow("Asteroid Avoider");
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
@@ -80,8 +98,8 @@ void HelloGL::InitGL(int argc, char* argv[])
 void HelloGL::InitLighting()
 {
 	_lightPosition = new Vector4();
-	_lightPosition->x = 0.0;
-	_lightPosition->y = 0.2;
+	_lightPosition->x = 0.2;
+	_lightPosition->y = 0.5;
 	_lightPosition->z = 1.0;
 	_lightPosition->w = 0.0;
 
@@ -103,7 +121,7 @@ void HelloGL::InitLighting()
 void HelloGL::LightingMaterial()
 {
 	_material = new Material();
-	_material->Ambient.x = 0.6; _material->Ambient.y = 0.3; _material->Ambient.z = 0.6; _material->Ambient.w = 1.0;
+	_material->Ambient.x = 0.8; _material->Ambient.y = 0.2; _material->Ambient.z = 0.8; _material->Ambient.w = 1.0;
 	_material->Diffuse.x = 0.8; _material->Diffuse.y = 0.8; _material->Diffuse.z = 0.8; _material->Diffuse.w = 1.0;
 	_material->Specular.x = 0.0; _material->Specular.y = 1.0; _material->Specular.z = 1.0; _material->Specular.w = 1.0;
 	_material->Shininess = 100.0f;
@@ -122,14 +140,25 @@ void HelloGL::DrawString(const char* text, Vector3* position, Color* color)
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clears the scene
-	background->Draw();
-	for (int i = 0; i < 200; i++)
+	if (!startGame)
 	{
-		objects[i]->Draw();
+		startUpBackground->Draw();
 	}
-	if (startGame && !isPlayerDead)
-		ship->Draw();
 
+	else if (startGame)
+	{
+		background->Draw();
+		for (int i = 0; i < 200; i++)
+		{
+			asteroids[i]->Draw();
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			powerUps[i]->Draw();
+		}
+		if (startGame && !isPlayerDead)
+			ship->Draw();
+	}
 	std::string strScore = std::to_string(score);
 	const char* charScore = strScore.c_str();
 	Color c = { 0.0f, 0.0f, 0.0f };
@@ -142,17 +171,22 @@ void HelloGL::Display()
 		DrawString(charScore, &v2, &c);
 	}
 
-	if (isPlayerDead)
+	if (isPaused && !isPlayerDead)
 	{
-		Vector3 v3 = { -0.05f, 0.05f, 0.0f };
-		DrawString("GAME OVER", &v3, &c);
-		Vector3 v4 = { -0.05f, 0.0f, 0.0f };
-		DrawString("SCORE: ", &v4, &c);
-		Vector3 v5 = { 0.02f, 0.0f, 0.0f };
-		DrawString(charScore, &v5, &c);
+		Vector3 v = { -0.05f, 0.05f, 0.0f };
+		Color c2 = { 200.0f, 0.0f, 0.0f };
+		DrawString("PAUSED", &v, &c2);
 	}
 
-
+	if (isPlayerDead)
+	{
+		Vector3 v3 = { -0.05f, 0.35f, 0.0f };
+		DrawString("GAME OVER", &v3, &c);
+		Vector3 v4 = { -0.05f, 0.325f, 0.0f };
+		DrawString("SCORE: ", &v4, &c);
+		Vector3 v5 = { 0.02f, 0.325f, 0.0f };
+		DrawString(charScore, &v5, &c);
+	}
 
 	glFlush(); //Flushes the scene drawn to the graphics card
 	glutSwapBuffers();
@@ -162,10 +196,12 @@ void HelloGL::Update()
 {
 	glLoadIdentity();
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
-	if (startGame)
+	if (startGame && !isPaused)
 	{
 		for (int i = 0; i < 200; i++)
-			objects[i]->Update();
+			asteroids[i]->Update();
+		for (int i = 0; i < 3; i++)
+			powerUps[i]->Update();
 		ship->Update();
 	}
 	glutPostRedisplay();
@@ -174,29 +210,39 @@ void HelloGL::Update()
 	glMaterialfv(GL_FRONT, GL_AMBIENT, &(_material->Ambient.x));
 	glMaterialf(GL_FRONT, GL_SHININESS, _material->Shininess);
 
-	if (startGame && !isPlayerDead)
+	if (startGame && !isPlayerDead && !isPaused)
 	{
-		score += 10;
+		scoreTime++;
+		if (scoreTime == 10)
+		{
+			score += 10;
+			scoreTime = 0;
+			if (powerUpActive)
+				score += 10;
+		}
 	}
 
-	if (wKeyDown == true && !isPlayerDead)
+	if (!isPlayerDead && !isPaused)
 	{
-		dynamic_cast<PlayerShip*>(ship)->moveUp();
-	}
+		if (wKeyDown == true)
+		{
+			dynamic_cast<PlayerShip*>(ship)->moveUp();
+		}
 
-	if (aKeyDown == true && !isPlayerDead)
-	{
-		dynamic_cast<PlayerShip*>(ship)->moveLeft();
-	}
+		if (aKeyDown == true)
+		{
+			dynamic_cast<PlayerShip*>(ship)->moveLeft();
+		}
 
-	if (dKeyDown == true && !isPlayerDead)
-	{
-		dynamic_cast<PlayerShip*>(ship)->moveRight();
-	}
+		if (dKeyDown == true)
+		{
+			dynamic_cast<PlayerShip*>(ship)->moveRight();
+		}
 
-	if (sKeyDown == true && !isPlayerDead)
-	{
-		dynamic_cast<PlayerShip*>(ship)->moveDown();
+		if (sKeyDown == true)
+		{
+			dynamic_cast<PlayerShip*>(ship)->moveDown();
+		}
 	}
 
 	CollisionDetection();
@@ -204,41 +250,33 @@ void HelloGL::Update()
 
 void HelloGL::Keyboard(unsigned char key, int x, int y)
 {
-	
-	//if (key == 'w')
-	//{		
-	//	for (int i = 0; i < 500; i++)
-	//	{
-	//		dynamic_cast<Cube*>(objects[i])->moveUp();
-	//	}
-	//}
-
-	//if (key == 's')
-	//{
-	//	for (int i = 0; i < 500; i++)
-	//	{
-	//		dynamic_cast<Cube*>(objects[i])->moveDown();
-	//	}
-	//}
-
-	//if (key == 'a')
-	//{
-	//	for (int i = 0; i < 500; i++)
-	//	{
-	//		dynamic_cast<Cube*>(objects[i])->moveLeft();
-	//	}
-	//}
-
-	//if (key == 'd')
-	//{
-	//	for (int i = 0; i < 500; i++)
-	//	{
-	//		dynamic_cast<Cube*>(objects[i])->moveRight();
-	//	}
-	//}
-
 	if (startGame == false && key == ' ')
 		startGame = true;
+
+	if (startGame && !isPaused && !isPlayerDead && key == 'p')
+	{
+		isPaused = true;
+	}
+
+	else if (startGame && isPaused && key == 'p')
+	{
+		isPaused = false;
+	}
+
+	if (startGame && !doRestart && key == 'r')
+	{
+		RestartGame();
+	}
+
+	else if (key != 'r')
+	{
+		doRestart = false;
+	}
+
+	if (key == 'q')
+	{
+		exit(0);
+	}
 
 	if (startGame && key == 'w')
 	{
@@ -281,21 +319,6 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 	}
 }
 
-//void HelloGL::Keyboard(unsigned char key, int x, int y)
-//{
-//	if (key == 'w')
-//		camera->eye.z -= 0.1f;
-//
-//	if (key == 's')
-//		camera->eye.z += 0.1f;
-//
-//	if (key == 'a')
-//		camera->eye.x += 0.1f;
-//
-//	if (key == 'd')
-//		camera->eye.x -= 0.1f;
-//}
-
 void HelloGL::CollisionDetection()
 {
 	float shipXPos = dynamic_cast<PlayerShip*>(ship)->getXPosition();
@@ -304,20 +327,55 @@ void HelloGL::CollisionDetection()
 
 	for (int i = 0; i < 200; i++)
 	{
-		float cubeXPos = dynamic_cast<Cube*>(objects[i])->getXPosition();
-		float cubeYPos = dynamic_cast<Cube*>(objects[i])->getYPosition();
-		float cubeZPos = dynamic_cast<Cube*>(objects[i])->getZPosition();
-
-		//cout << "Cube " << i << " X: " << cubeXPos << " Y: " << cubeYPos << endl;
+		float cubeXPos = dynamic_cast<Cube*>(asteroids[i])->getXPosition();
+		float cubeYPos = dynamic_cast<Cube*>(asteroids[i])->getYPosition();
+		float cubeZPos = dynamic_cast<Cube*>(asteroids[i])->getZPosition();
 
 		float distance = ((shipXPos - cubeXPos) * (shipXPos - cubeXPos) + (shipYPos - cubeYPos) * (shipYPos - cubeYPos) + (shipZPos - cubeZPos) * (shipZPos - cubeZPos));
-		//cout << distance << endl;
 
-		if (distance <= 5.0f)
+		if (distance <= 5.0f && !powerUpActive)
 		{
 			isPlayerDead = true;
 		}
+
+		if (powerUpActive == true && powerUpTimer > 0 && !isPaused)
+		{
+			powerUpTimer--;
+			dynamic_cast<Cube*>(asteroids[i])->PowerUpAsteroid();
+		}
+
+		else if (powerUpActive == true && powerUpTimer <= 0)
+		{
+			powerUpActive = false;
+			powerUpTimer = 5000.0f;
+		}
 	}
 
+	for (int i = 0; i < 3; i++)
+	{
+		float powerUpXPos = dynamic_cast<PowerUp*>(powerUps[i])->getXPosition();
+		float powerUpYPos = dynamic_cast<PowerUp*>(powerUps[i])->getYPosition();
+		float powerUpZPos = dynamic_cast<PowerUp*>(powerUps[i])->getZPosition();
 
+		float distance = ((shipXPos - powerUpXPos) * (shipXPos - powerUpXPos) + (shipYPos - powerUpYPos) * (shipYPos - powerUpYPos) + (shipZPos - powerUpZPos) * (shipZPos - powerUpZPos));
+
+		if (distance <= 3.0f && !isPlayerDead)
+		{
+			score += 50;
+			powerUpActive = true;
+		}
+
+		if (powerUpActive)
+		{
+			dynamic_cast<PowerUp*>(powerUps[i])->PowerUpEffect();
+		}
+	}
+}
+
+void HelloGL::RestartGame()
+{
+	score = 0;
+	isPlayerDead = false;
+	doRestart = true;
+	InitObjects();
 }
