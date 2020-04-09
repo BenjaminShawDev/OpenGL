@@ -365,7 +365,7 @@ void HelloGL::CollisionDetection()
 			powerUpActive = true;
 		}
 
-		if (powerUpActive)
+		if (powerUpActive && !isPaused)
 		{
 			dynamic_cast<PowerUp*>(powerUps[i])->PowerUpEffect();
 		}

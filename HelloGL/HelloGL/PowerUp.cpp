@@ -7,7 +7,6 @@ PowerUp::PowerUp(Mesh* mesh, Texture2D* texture, float x, float y, float z) : Sc
 	_position.z = z;
 	_rotation = 0;
 	_objectAcceleration = 0.1f;
-	powerUpActive = false;
 }
 
 PowerUp::~PowerUp()
@@ -48,14 +47,6 @@ void PowerUp::Update()
 		_position.x = ((rand() % 80) / 10.0f) - 4.0f;
 		_position.y = ((rand() % 70) / 10.0f) - 3.5f;
 		_position.z = -750.0f;
-	}
-
-	else if (powerUpActive)
-	{
-		_position.x = ((rand() % 80) / 10.0f) - 4.0f;
-		_position.y = ((rand() % 70) / 10.0f) - 3.5f;
-		_position.z = -1000.0f;
-		powerUpActive = false;
 	}
 }
 
