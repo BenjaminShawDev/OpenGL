@@ -9,8 +9,6 @@
 #include "SceneObject.h"
 #include "HelloGL.h"
 
-#define MOVEMENT_SPEED 0.1f
-
 class HelloGL;
 
 class PlayerShip : public SceneObject
@@ -25,7 +23,6 @@ public:
 	~PlayerShip();
 
 	void Draw();
-	void Update();
 	void moveUp();
 	void moveLeft();
 	void moveRight();

@@ -123,12 +123,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Cube.h" />
+    <ClInclude Include="Asteroid.h" />
     <ClInclude Include="GLUTCallbacks.h" />
     <ClInclude Include="HelloGL.h" />
     <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="PlayerShip.h" />
     <ClInclude Include="PowerUp.h" />
+    <ClInclude Include="PowerUpBeam.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Pyramid.h" />
     <ClInclude Include="StarBackground.h" />
@@ -137,13 +138,14 @@
     <ClInclude Include="Texture2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Asteroid.cpp" />
     <ClCompile Include="GLUTCallbacks.cpp" />
     <ClCompile Include="HelloGL.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="PlayerShip.cpp" />
     <ClCompile Include="PowerUp.cpp" />
+    <ClCompile Include="PowerUpBeam.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="StarBackground.cpp" />

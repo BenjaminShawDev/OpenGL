@@ -14,10 +14,16 @@ HelloGL::HelloGL(int argc, char* argv[])
 	isPlayerDead = false;
 	isPaused = false;
 	doRestart = false;
-	powerUpActive = false;
+	speedPowerUpActive = false;
+	slowPowerUpActive = false;
+	beamPowerUpActive = false;
+	newHighScore = false;
 	score = 0;
 	scoreTime = 0;
-	powerUpTimer = 5000;
+	powerUpTimer = 10000;
+	numOfSpeedPowerUps = 0;
+	numOfSlowPowerUps = 0;
+	numOfBeamPowerUps = 0;
 
 	glutMainLoop();
 }
@@ -46,26 +52,42 @@ void HelloGL::InitObjects()
 	backgroundTexture->Load((char*)"Textures/Space.raw", 1024, 1024);
 	background = new StarBackground(backgroundMesh, backgroundTexture, 0, 0, -240);
 
-	Mesh* cubeMesh = MeshLoader::Load((char*)"ObjectFiles/Cube.txt");
+	Mesh* AsteroidMesh = MeshLoader::Load((char*)"ObjectFiles/Cube.txt");
 	Texture2D* texture = new Texture2D();
 	texture->Load((char*)"Textures/Asteroid.raw", 512, 512);
 	for (int i = 0; i < 500; i++)
 	{
-		asteroids[i] = new Cube(cubeMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 10000) / 10.0f);
+		asteroids[i] = new Asteroid(AsteroidMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 10000) / 10.0f);
 	}
 
+	//Mesh* powerUpMesh = MeshLoader::Load((char*)"ObjectFiles/PowerUp.txt");
+	//Texture2D* powerUpTexture = new Texture2D();
+	//powerUpTexture->Load((char*)"Textures/PowerUp.raw", 512, 512);
+	//for (int i = 0; i < 3; i++)
+	//{
+	//	powerUps[i] = new PowerUp(powerUpMesh, powerUpTexture, ((rand() % 80) / 10.0f) - 4.0f, ((rand() % 70) / 10.0f) - 3.5f, -(rand() % 10000) / 10.0f);
+	//}
+
 	Mesh* powerUpMesh = MeshLoader::Load((char*)"ObjectFiles/PowerUp.txt");
-	Texture2D* powerUpTexture = new Texture2D();
-	powerUpTexture->Load((char*)"Textures/PowerUp.raw", 512, 512);
-	for (int i = 0; i < 3; i++)
-	{
-		powerUps[i] = new PowerUp(powerUpMesh, powerUpTexture, ((rand() % 80) / 10.0f) - 4.0f, ((rand() % 70) / 10.0f) - 3.5f, -(rand() % 10000) / 10.0f);
-	}
+	Texture2D* powerUpTexture0 = new Texture2D();
+	powerUpTexture0->Load((char*)"Textures/PowerUp.raw", 512, 512);
+	Texture2D* powerUpTexture1 = new Texture2D();
+	powerUpTexture1->Load((char*)"Textures/PowerUp2.raw", 512, 512);
+	Texture2D* powerUpTexture2 = new Texture2D();
+	powerUpTexture2->Load((char*)"Textures/PowerUp3.raw", 512, 512);
+	powerUps[0] = new PowerUp(powerUpMesh, powerUpTexture0, ((rand() % 80) / 10.0f) - 4.0f, ((rand() % 70) / 10.0f) - 3.5f, -(rand() % 10000) / 10.0f);
+	powerUps[1] = new PowerUp(powerUpMesh, powerUpTexture1, ((rand() % 80) / 10.0f) - 4.0f, ((rand() % 70) / 10.0f) - 3.5f, -(rand() % 10000) / 10.0f);
+	powerUps[2] = new PowerUp(powerUpMesh, powerUpTexture2, ((rand() % 80) / 10.0f) - 4.0f, ((rand() % 70) / 10.0f) - 3.5f, -(rand() % 10000) / 10.0f);
 
 	Mesh* shipMesh = MeshLoader::Load((char*)"ObjectFiles/TestShape.txt");
 	Texture2D* shipTexture = new Texture2D();
 	shipTexture->Load((char*)"Textures/ShipTexture.raw", 512, 512);
 	ship = new PlayerShip(shipMesh, shipTexture, 0, 0, -10);
+
+	Mesh* beamMesh = MeshLoader::Load((char*)"ObjectFiles/Beam.txt");
+	Texture2D* beamTexture = new Texture2D();
+	beamTexture->Load((char*)"Textures/Beam.raw", 512, 512);
+	powerUpBeam = new PowerUpBeam(beamMesh, beamTexture, 0, 0, -12);
 }
 
 void HelloGL::InitGL(int argc, char* argv[])
@@ -158,6 +180,10 @@ void HelloGL::Display()
 		}
 		if (startGame && !isPlayerDead)
 			ship->Draw();
+		if (beamPowerUpActive)
+		{
+			powerUpBeam->Draw();
+		}
 	}
 	std::string strScore = std::to_string(score);
 	const char* charScore = strScore.c_str();
@@ -180,12 +206,18 @@ void HelloGL::Display()
 
 	if (isPlayerDead)
 	{
-		Vector3 v3 = { -0.05f, 0.35f, 0.0f };
-		DrawString("GAME OVER", &v3, &c);
-		Vector3 v4 = { -0.05f, 0.325f, 0.0f };
-		DrawString("SCORE: ", &v4, &c);
-		Vector3 v5 = { 0.02f, 0.325f, 0.0f };
-		DrawString(charScore, &v5, &c);
+		Vector3 v = { -0.05f, 0.35f, 0.0f };
+		DrawString("GAME OVER", &v, &c);
+		Vector3 v2 = { -0.05f, 0.325f, 0.0f };
+		DrawString("SCORE: ", &v2, &c);
+		Vector3 v3 = { 0.02f, 0.325f, 0.0f };
+		DrawString(charScore, &v3, &c);
+	}
+
+	if (newHighScore)
+	{
+		Vector3 v = { -0.05f, 0.3f, 0.0f };
+		DrawString("NEW HIGH SCORE!", &v, &c);
 	}
 
 	glFlush(); //Flushes the scene drawn to the graphics card
@@ -202,8 +234,8 @@ void HelloGL::Update()
 			asteroids[i]->Update();
 		for (int i = 0; i < 3; i++)
 			powerUps[i]->Update();
-		ship->Update();
 	}
+
 	glutPostRedisplay();
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
 	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
@@ -217,7 +249,7 @@ void HelloGL::Update()
 		{
 			score += 10;
 			scoreTime = 0;
-			if (powerUpActive)
+			if (speedPowerUpActive)
 				score += 10;
 		}
 	}
@@ -227,21 +259,25 @@ void HelloGL::Update()
 		if (wKeyDown == true)
 		{
 			dynamic_cast<PlayerShip*>(ship)->moveUp();
+			dynamic_cast<PowerUpBeam*>(powerUpBeam)->moveUp();
 		}
 
 		if (aKeyDown == true)
 		{
 			dynamic_cast<PlayerShip*>(ship)->moveLeft();
+			dynamic_cast<PowerUpBeam*>(powerUpBeam)->moveLeft();
 		}
 
 		if (dKeyDown == true)
 		{
 			dynamic_cast<PlayerShip*>(ship)->moveRight();
+			dynamic_cast<PowerUpBeam*>(powerUpBeam)->moveRight();
 		}
 
 		if (sKeyDown == true)
 		{
 			dynamic_cast<PlayerShip*>(ship)->moveDown();
+			dynamic_cast<PowerUpBeam*>(powerUpBeam)->moveDown();
 		}
 	}
 
@@ -252,71 +288,32 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 {
 	if (startGame == false && key == ' ')
 		startGame = true;
-
 	if (startGame && !isPaused && !isPlayerDead && key == 'p')
-	{
 		isPaused = true;
-	}
-
 	else if (startGame && isPaused && key == 'p')
-	{
 		isPaused = false;
-	}
-
 	if (startGame && !doRestart && key == 'r')
-	{
 		RestartGame();
-	}
-
 	else if (key != 'r')
-	{
 		doRestart = false;
-	}
-
 	if (key == 'q')
-	{
 		exit(0);
-	}
-
 	if (startGame && key == 'w')
-	{
 		wKeyDown = true;
-	}
-
 	else if (key != 'w')
-	{
 		wKeyDown = false;
-	}
-
 	if (startGame && key == 's')
-	{
 		sKeyDown = true;
-	}
-
 	else if (key != 's')
-	{
 		sKeyDown = false;
-	}
-
 	if (startGame && key == 'a')
-	{
 		aKeyDown = true;
-	}
-
 	else if (key != 'a')
-	{
 		aKeyDown = false;
-	}
-
 	if (startGame && key == 'd')
-	{
 		dKeyDown = true;
-	}
-
 	else if (key != 'd')
-	{
 		dKeyDown = false;
-	}
 }
 
 void HelloGL::CollisionDetection()
@@ -327,28 +324,63 @@ void HelloGL::CollisionDetection()
 
 	for (int i = 0; i < 200; i++)
 	{
-		float cubeXPos = dynamic_cast<Cube*>(asteroids[i])->getXPosition();
-		float cubeYPos = dynamic_cast<Cube*>(asteroids[i])->getYPosition();
-		float cubeZPos = dynamic_cast<Cube*>(asteroids[i])->getZPosition();
+		float asteroidXPos = dynamic_cast<Asteroid*>(asteroids[i])->getXPosition();
+		float asteroidYPos = dynamic_cast<Asteroid*>(asteroids[i])->getYPosition();
+		float asteroidZPos = dynamic_cast<Asteroid*>(asteroids[i])->getZPosition();
 
-		float distance = ((shipXPos - cubeXPos) * (shipXPos - cubeXPos) + (shipYPos - cubeYPos) * (shipYPos - cubeYPos) + (shipZPos - cubeZPos) * (shipZPos - cubeZPos));
+		float distance = ((shipXPos - asteroidXPos) * (shipXPos - asteroidXPos) + (shipYPos - asteroidYPos) * (shipYPos - asteroidYPos) + (shipZPos - asteroidZPos) * (shipZPos - asteroidZPos));
 
-		if (distance <= 5.0f && !powerUpActive)
+		if (distance <= 5.0f && !speedPowerUpActive && !isPlayerDead)
 		{
 			isPlayerDead = true;
+			string highScore;
+			int tempHighScore = 0;
+			outStream.open("Highscore/Score.txt");
+			getline(outStream, highScore);
+			tempHighScore = stoi(highScore);
+			outStream.close();
+			if (score > tempHighScore)
+			{
+				newHighScore = true;
+				inStream.open("Highscore/Score.txt");
+				inStream << score << "\nSpeed powerups used: " << numOfSpeedPowerUps << "\nSlow powerups used: " << numOfSlowPowerUps << "\nBeam powerups used: " << numOfBeamPowerUps;
+				inStream.close();
+			}
 		}
 
-		if (powerUpActive == true && powerUpTimer > 0 && !isPaused)
+		//PowerUps
+		if (speedPowerUpActive == true && powerUpTimer > 0 && !isPaused)
 		{
 			powerUpTimer--;
-			dynamic_cast<Cube*>(asteroids[i])->PowerUpAsteroid();
+			dynamic_cast<Asteroid*>(asteroids[i])->SpeedPowerUpAsteroid();
+		}
+		else if (speedPowerUpActive == true && powerUpTimer <= 0)
+		{
+			speedPowerUpActive = false;
+			powerUpTimer = 10000.0f;
+		}
+		if (slowPowerUpActive == true && powerUpTimer > 0 && !isPaused)
+		{
+			powerUpTimer--;
+			dynamic_cast<Asteroid*>(asteroids[i])->SlowPowerUpAsteroid();
+		}
+		else if (slowPowerUpActive == true && powerUpTimer <= 0)
+		{
+			slowPowerUpActive = false;
+			powerUpTimer = 10000.0f;
+		}
+		if (beamPowerUpActive == true && powerUpTimer > 0 && !isPaused)
+		{
+			powerUpTimer--;
+			if (shipXPos - asteroidXPos >= -2.5f && shipXPos - asteroidXPos <= 2.5f && shipYPos - asteroidYPos >= -2.5f && shipYPos - asteroidYPos <= 2.5f)
+				dynamic_cast<Asteroid*>(asteroids[i])->BeamPowerUpAsteroid();
+		}
+		else if (beamPowerUpActive == true && powerUpTimer <= 0)
+		{
+			beamPowerUpActive = false;
+			powerUpTimer = 10000.0f;
 		}
 
-		else if (powerUpActive == true && powerUpTimer <= 0)
-		{
-			powerUpActive = false;
-			powerUpTimer = 5000.0f;
-		}
 	}
 
 	for (int i = 0; i < 3; i++)
@@ -359,23 +391,40 @@ void HelloGL::CollisionDetection()
 
 		float distance = ((shipXPos - powerUpXPos) * (shipXPos - powerUpXPos) + (shipYPos - powerUpYPos) * (shipYPos - powerUpYPos) + (shipZPos - powerUpZPos) * (shipZPos - powerUpZPos));
 
-		if (distance <= 3.0f && !isPlayerDead)
+		if (distance <= 3.5f && !isPlayerDead)
 		{
-			score += 50;
-			powerUpActive = true;
+			score += 20;
+			if (i == 0)
+			{
+				speedPowerUpActive = true;
+				numOfSpeedPowerUps++;
+			}
+			else if (i == 1)
+			{
+				beamPowerUpActive = true;
+				numOfBeamPowerUps++;
+			}
+			else
+			{
+				slowPowerUpActive = true;
+				numOfSlowPowerUps++;
+			}
+			dynamic_cast<PowerUp*>(powerUps[i])->PowerUpPickUp();
 		}
 
-		if (powerUpActive && !isPaused)
-		{
-			dynamic_cast<PowerUp*>(powerUps[i])->PowerUpEffect();
-		}
+		if (speedPowerUpActive && !isPaused)
+			dynamic_cast<PowerUp*>(powerUps[i])->PowerUpPickUp();
 	}
 }
 
 void HelloGL::RestartGame()
 {
 	score = 0;
+	numOfSpeedPowerUps = 0;
+	numOfSlowPowerUps = 0;
+	numOfBeamPowerUps = 0;
 	isPlayerDead = false;
+	newHighScore = false;
 	doRestart = true;
 	InitObjects();
 }

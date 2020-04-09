@@ -1,28 +1,22 @@
-﻿  Cube.cpp
-  GLUTCallbacks.cpp
-  HelloGL.cpp
+﻿  HelloGL.cpp
 C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(7,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(101,25): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(107,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(108,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(109,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(111,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(112,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(113,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(115,30): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(116,30): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(117,30): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(124,28): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(124,56): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(124,84): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(125,28): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(125,56): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(125,84): warning C4305:  '=': truncation from 'double' to 'float'
-  PlayerShip.cpp
-  PowerUp.cpp
-  StarBackground.cpp
-  StartUpBackground.cpp
-  main.cpp
-  Generating Code...
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(350,19): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(123,25): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(129,29): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(130,29): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(131,29): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(133,29): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(134,29): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(135,29): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(137,30): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(138,30): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(139,30): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(146,28): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(146,56): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(146,84): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(147,28): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(147,56): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(147,84): warning C4305:  '=': truncation from 'double' to 'float'
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(360,19): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(370,19): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(381,19): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
   HelloGL.vcxproj -> C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\Debug\HelloGL.exe

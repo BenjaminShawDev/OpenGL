@@ -7,6 +7,8 @@ PowerUp::PowerUp(Mesh* mesh, Texture2D* texture, float x, float y, float z) : Sc
 	_position.z = z;
 	_rotation = 0;
 	_objectAcceleration = 0.1f;
+	slowPowerUpActive = false;
+	slowPowerUpTimer = 5000.0f;
 }
 
 PowerUp::~PowerUp()
@@ -39,20 +41,32 @@ void PowerUp::Draw()
 void PowerUp::Update()
 {
 	_rotation += 0.2f;
-	_position.z += _objectAcceleration;
-	_objectAcceleration += 0.0005f;
+	if (!slowPowerUpActive)
+	{
+		_position.z += _objectAcceleration;
+		_objectAcceleration += 0.0005f;
+	}
+
+	else
+	{
+		_position.z += 0.05f;
+		slowPowerUpTimer--;
+	}
+
+	if (slowPowerUpTimer <= 0)
+		slowPowerUpActive = false;
 
 	if (_position.z > 150.0f)
 	{
 		_position.x = ((rand() % 80) / 10.0f) - 4.0f;
 		_position.y = ((rand() % 70) / 10.0f) - 3.5f;
-		_position.z = -750.0f;
+		_position.z = ((rand() % 750)) - 2250.0f;
 	}
 }
 
-void PowerUp::PowerUpEffect()
+void PowerUp::PowerUpPickUp()
 {
-	_position.z += 15.0f;
+	_position.z += 11.0f;
 }
 
 float PowerUp::getXPosition()

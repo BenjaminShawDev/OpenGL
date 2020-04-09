@@ -37,17 +37,11 @@ void PlayerShip::Draw()
 	}
 }
 
-void PlayerShip::Update()
-{
-	//_rotation + 0.1f;
-	//_zRotation = 0.0f;
-}
-
 void PlayerShip::moveUp()
 {
 	if (_position.y < 3.6f)
 	{
-		_position.y += MOVEMENT_SPEED;
+		_position.y += 0.1f;
 		_xRotation = 1.0f;
 	}
 	_zRotation = 0.0f;
@@ -57,7 +51,7 @@ void PlayerShip::moveLeft()
 {
 	if (_position.x > -3.1f)
 	{
-		_position.x -= MOVEMENT_SPEED;
+		_position.x -= 0.1f;
 		_zRotation = 1.0f;
 	}
 	else
@@ -71,7 +65,7 @@ void PlayerShip::moveRight()
 {
 	if (_position.x < 3.1f)
 	{
-		_position.x += MOVEMENT_SPEED;
+		_position.x += 0.1f;
 		_zRotation = -1.0f;
 	}
 	else
@@ -84,7 +78,7 @@ void PlayerShip::moveRight()
 void PlayerShip::moveDown()
 {
 	if (_position.y > -3.6f)
-		_position.y -= MOVEMENT_SPEED;
+		_position.y -= 0.1f;
 	_zRotation = 0.0f;
 	_xRotation = -1.0f;
 }

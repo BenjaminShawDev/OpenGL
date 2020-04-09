@@ -6,14 +6,16 @@
 #include "GL\freeglut.h" //freeglut library
 #include "GLUTCallbacks.h"
 #include "Structures.h"
-#include "Cube.h"
+#include "Asteroid.h"
 #include "MeshLoader.h"
 #include "Pyramid.h"
 #include "PlayerShip.h"
 #include "StarBackground.h"
 #include "StartUpBackground.h"
 #include "PowerUp.h"
+#include "PowerUpBeam.h"
 #include <string>
+#include <fstream>
 
 class Cube;
 
@@ -35,8 +37,6 @@ public:
 	void CollisionDetection();
 	void RestartGame();
 
-	bool _move;
-
 private:
 	Camera* camera;
 	//Cube* cube[200];
@@ -45,19 +45,27 @@ private:
 	SceneObject* ship;
 	SceneObject* background;
 	SceneObject* startUpBackground;
+	SceneObject* powerUpBeam;
 	Vector4* _lightPosition;
 	Lighting* _lightData;
 	Material* _material;
-	Cube* cube;
+	fstream outStream;
+	ofstream inStream;
 
 	bool startGame;
 	bool isPlayerDead;
 	bool isPaused;
 	bool doRestart;
-	bool powerUpActive;
+	bool speedPowerUpActive;
+	bool slowPowerUpActive;
+	bool beamPowerUpActive;
+	bool newHighScore;
 	int scoreTime;
 	int score;
 	int powerUpTimer;
+	int numOfSpeedPowerUps;
+	int numOfSlowPowerUps;
+	int numOfBeamPowerUps;
 
 	bool wKeyDown = false;
 	bool aKeyDown = false;

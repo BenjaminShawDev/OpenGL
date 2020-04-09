@@ -17,13 +17,16 @@ private:
 	GLfloat _rotation;
 	Vector3 _position;
 	GLfloat _objectAcceleration;
+	bool slowPowerUpActive;
+	int slowPowerUpTimer;
+
 public:
 	PowerUp(Mesh* mesh, Texture2D* texture, float x, float y, float z);
 	~PowerUp();
 
 	void Draw();
 	void Update();
-	void PowerUpEffect();
+	void PowerUpPickUp();
 
 	float getXPosition();
 	float getYPosition();
