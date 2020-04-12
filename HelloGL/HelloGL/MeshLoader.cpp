@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#define TINYOBJLOADER_IMPLEMENTATION
+#include "tiny_obj_loader.h"
 
 using namespace std;
 
@@ -108,7 +110,6 @@ namespace MeshLoader
 			return nullptr;
 		}
 
-
 		LoadVertices(inFile, mesh);
 		//LoadColours(inFile, mesh);
 		LoadTexCoords(inFile, mesh);
@@ -118,8 +119,82 @@ namespace MeshLoader
 		return mesh;
 	}
 
-	void testLoader()
-	{
+	
 
+	Mesh* LoadOBJ(char* inputfile)
+	{
+		Mesh* mesh = new Mesh();
+
+		tinyobj::attrib_t attrib;
+		std::vector<tinyobj::shape_t> shapes;
+		std::vector<tinyobj::material_t> materials;
+
+		std::string warn;
+		std::string err;
+
+		bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, inputfile);
+
+		if (!warn.empty()) {
+			std::cout << warn << std::endl;
+		}
+
+		if (!err.empty()) {
+			std::cerr << err << std::endl;
+		}
+
+		if (!ret) {
+			exit(1);
+		}
+
+		for (size_t s = 0; s < shapes.size(); s++) {
+			size_t index_offset = 0;
+			for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
+				int fv = shapes[s].mesh.num_face_vertices[f];
+
+				for (size_t v = 0; v < fv; v++) {
+
+					mesh->numVertices += 3;
+					mesh->NormalCount += 3;
+					mesh->TexCoordCount += 2;
+					mesh->numIndices += 1;
+				}
+				index_offset += fv;
+
+				shapes[s].mesh.material_ids[f];
+			}
+		}
+
+		mesh->Vertices = new Vertex[mesh->numVertices];
+		mesh->TexCoords = new TexCoord[mesh->TexCoordCount];
+		mesh->Normals = new Vector3[mesh->NormalCount];
+		mesh->Indices = new GLushort[mesh->numIndices];
+
+		int index = 0;
+
+		for (size_t s = 0; s < shapes.size(); s++) {
+			size_t index_offset = 0;
+			for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
+				int fv = shapes[s].mesh.num_face_vertices[f];
+				for (size_t v = 0; v < fv; v++) {
+					tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
+					mesh->Vertices[index].x = attrib.vertices[3 * idx.vertex_index + 0];
+					mesh->Vertices[index].y = attrib.vertices[3 * idx.vertex_index + 1];
+					mesh->Vertices[index].z = attrib.vertices[3 * idx.vertex_index + 2];
+					mesh->Normals[index].x = attrib.normals[3 * idx.normal_index + 0];
+					mesh->Normals[index].y = attrib.normals[3 * idx.normal_index + 1];
+					mesh->Normals[index].z = attrib.normals[3 * idx.normal_index + 2];
+					mesh->TexCoords[index].u = attrib.texcoords[2 * idx.texcoord_index + 0];
+					mesh->TexCoords[index].v = attrib.texcoords[2 * idx.texcoord_index + 1];
+					mesh->Indices[index] = index;
+
+					index++;
+				}
+				index_offset += fv;
+
+				shapes[s].mesh.material_ids[f];
+			}
+		}
+
+		return mesh;
 	}
 }

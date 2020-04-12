@@ -25,7 +25,7 @@ void StartUpBackground::Draw()
 
 		glPushMatrix();
 		glTranslatef(_position.x, _position.y, _position.z);
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, _mesh->Indices);
+		glDrawElements(GL_TRIANGLES, _mesh->numIndices, GL_UNSIGNED_SHORT, _mesh->Indices);
 		glPopMatrix();
 
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);

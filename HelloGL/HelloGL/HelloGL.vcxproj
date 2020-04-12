@@ -136,6 +136,7 @@
     <ClInclude Include="StartUpBackground.h" />
     <ClInclude Include="Structures.h" />
     <ClInclude Include="Texture2D.h" />
+    <ClInclude Include="tiny_obj_loader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Asteroid.cpp" />

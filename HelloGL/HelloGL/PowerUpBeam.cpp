@@ -25,7 +25,7 @@ void PowerUpBeam::Draw()
 
 		glPushMatrix();
 		glTranslatef(_position.x, _position.y, _position.z);
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, _mesh->Indices);
+		glDrawElements(GL_TRIANGLES, _mesh->numIndices, GL_UNSIGNED_SHORT, _mesh->Indices);
 		glPopMatrix();
 
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -35,24 +35,24 @@ void PowerUpBeam::Draw()
 
 void PowerUpBeam::moveUp()
 {
-	if (_position.y < 3.6f)
+	if (_position.y < 3.7f)
 		_position.y += 0.1f;
 }
 
 void PowerUpBeam::moveLeft()
 {
-	if (_position.x > -3.1f)
+	if (_position.x > -3.4f)
 		_position.x -= 0.1f;
 }
 
 void PowerUpBeam::moveRight()
 {
-	if (_position.x < 3.1f)
+	if (_position.x < 3.4f)
 		_position.x += 0.1f;
 }
 
 void PowerUpBeam::moveDown()
 {
-	if (_position.y > -3.6f)
+	if (_position.y > -3.7f)
 		_position.y -= 0.1f;
 }

@@ -44,7 +44,7 @@ void HelloGL::InitObjects()
 
 	Mesh* startUpBackgroundMesh = MeshLoader::Load((char*)"ObjectFiles/Menu.txt");
 	Texture2D* startUpBackgroundTexture = new Texture2D();
-	startUpBackgroundTexture->Load((char*)"Textures/Menu2.raw", 512, 512);
+	startUpBackgroundTexture->Load((char*)"Textures/StartUpMenu2.raw", 1024, 1024);
 	startUpBackground = new StartUpBackground(startUpBackgroundMesh, startUpBackgroundTexture, 0, 0, -65);
 
 	Mesh* backgroundMesh = MeshLoader::Load((char*)"ObjectFiles/Background.txt");
@@ -52,7 +52,7 @@ void HelloGL::InitObjects()
 	backgroundTexture->Load((char*)"Textures/Space.raw", 1024, 1024);
 	background = new StarBackground(backgroundMesh, backgroundTexture, 0, 0, -240);
 
-	Mesh* AsteroidMesh = MeshLoader::Load((char*)"ObjectFiles/Cube.txt");
+	Mesh* AsteroidMesh = MeshLoader::LoadOBJ((char*)"ObjectFiles/Asteroid.obj");
 	Texture2D* texture = new Texture2D();
 	texture->Load((char*)"Textures/Asteroid.raw", 512, 512);
 	for (int i = 0; i < 500; i++)
@@ -68,7 +68,7 @@ void HelloGL::InitObjects()
 	//	powerUps[i] = new PowerUp(powerUpMesh, powerUpTexture, ((rand() % 80) / 10.0f) - 4.0f, ((rand() % 70) / 10.0f) - 3.5f, -(rand() % 10000) / 10.0f);
 	//}
 
-	Mesh* powerUpMesh = MeshLoader::Load((char*)"ObjectFiles/PowerUp.txt");
+	Mesh* powerUpMesh = MeshLoader::LoadOBJ((char*)"ObjectFiles/PowerUp.obj");
 	Texture2D* powerUpTexture0 = new Texture2D();
 	powerUpTexture0->Load((char*)"Textures/PowerUp.raw", 512, 512);
 	Texture2D* powerUpTexture1 = new Texture2D();
@@ -79,12 +79,12 @@ void HelloGL::InitObjects()
 	powerUps[1] = new PowerUp(powerUpMesh, powerUpTexture1, ((rand() % 80) / 10.0f) - 4.0f, ((rand() % 70) / 10.0f) - 3.5f, -(rand() % 10000) / 10.0f);
 	powerUps[2] = new PowerUp(powerUpMesh, powerUpTexture2, ((rand() % 80) / 10.0f) - 4.0f, ((rand() % 70) / 10.0f) - 3.5f, -(rand() % 10000) / 10.0f);
 
-	Mesh* shipMesh = MeshLoader::Load((char*)"ObjectFiles/TestShape.txt");
+	Mesh* shipMesh = MeshLoader::LoadOBJ((char*)"ObjectFiles/Ship.obj");
 	Texture2D* shipTexture = new Texture2D();
-	shipTexture->Load((char*)"Textures/ShipTexture.raw", 512, 512);
+	shipTexture->Load((char*)"Textures/ShipRedTexture.raw", 512, 512);
 	ship = new PlayerShip(shipMesh, shipTexture, 0, 0, -10);
 
-	Mesh* beamMesh = MeshLoader::Load((char*)"ObjectFiles/Beam.txt");
+	Mesh* beamMesh = MeshLoader::LoadOBJ((char*)"ObjectFiles/Beam.obj");
 	Texture2D* beamTexture = new Texture2D();
 	beamTexture->Load((char*)"Textures/Beam.raw", 512, 512);
 	powerUpBeam = new PowerUpBeam(beamMesh, beamTexture, 0, 0, -12);
@@ -120,7 +120,7 @@ void HelloGL::InitGL(int argc, char* argv[])
 void HelloGL::InitLighting()
 {
 	_lightPosition = new Vector4();
-	_lightPosition->x = 0.2;
+	_lightPosition->x = 0.3;
 	_lightPosition->y = 0.5;
 	_lightPosition->z = 1.0;
 	_lightPosition->w = 0.0;
@@ -143,7 +143,7 @@ void HelloGL::InitLighting()
 void HelloGL::LightingMaterial()
 {
 	_material = new Material();
-	_material->Ambient.x = 0.8; _material->Ambient.y = 0.2; _material->Ambient.z = 0.8; _material->Ambient.w = 1.0;
+	_material->Ambient.x = 1.0; _material->Ambient.y = 0.0; _material->Ambient.z = 1.0; _material->Ambient.w = 0.0;
 	_material->Diffuse.x = 0.8; _material->Diffuse.y = 0.8; _material->Diffuse.z = 0.8; _material->Diffuse.w = 1.0;
 	_material->Specular.x = 0.0; _material->Specular.y = 1.0; _material->Specular.z = 1.0; _material->Specular.w = 1.0;
 	_material->Shininess = 100.0f;
@@ -330,7 +330,7 @@ void HelloGL::CollisionDetection()
 
 		float distance = ((shipXPos - asteroidXPos) * (shipXPos - asteroidXPos) + (shipYPos - asteroidYPos) * (shipYPos - asteroidYPos) + (shipZPos - asteroidZPos) * (shipZPos - asteroidZPos));
 
-		if (distance <= 5.0f && !speedPowerUpActive && !isPlayerDead)
+		if (distance <= 4.8f && !speedPowerUpActive && !isPlayerDead)
 		{
 			isPlayerDead = true;
 			string highScore;

@@ -25,7 +25,8 @@ void StarBackground::Draw()
 
 		glPushMatrix();
 		glTranslatef(_position.x, _position.y, _position.z);
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, _mesh->Indices);
+		glRotatef(0.2f, 1.0f, 1.0f, 0.0f);
+		glDrawElements(GL_TRIANGLES, _mesh->numIndices, GL_UNSIGNED_SHORT, _mesh->Indices);
 		glPopMatrix();
 
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
