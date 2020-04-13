@@ -19,7 +19,6 @@ private:
 	Vector3 _position;
 	GLfloat _objectAcceleration;
 	float powerUpTimer;
-	bool slowPowerUpActive;
 
 public:
 	//static bool Load(char* path);

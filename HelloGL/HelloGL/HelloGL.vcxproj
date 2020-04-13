@@ -131,7 +131,6 @@
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="PowerUpBeam.h" />
     <ClInclude Include="SceneObject.h" />
-    <ClInclude Include="Pyramid.h" />
     <ClInclude Include="StarBackground.h" />
     <ClInclude Include="StartUpBackground.h" />
     <ClInclude Include="Structures.h" />
@@ -148,7 +147,6 @@
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="PowerUpBeam.cpp" />
     <ClCompile Include="SceneObject.cpp" />
-    <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="StarBackground.cpp" />
     <ClCompile Include="StartUpBackground.cpp" />
     <ClCompile Include="Texture2D.cpp" />

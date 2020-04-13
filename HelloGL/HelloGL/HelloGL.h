@@ -60,15 +60,14 @@ private:
 	bool slowPowerUpActive;
 	bool beamPowerUpActive;
 	bool newHighScore;
+	bool wKeyDown;
+	bool aKeyDown;
+	bool dKeyDown;
+	bool sKeyDown;
 	int scoreTime;
 	int score;
 	int powerUpTimer;
 	int numOfSpeedPowerUps;
 	int numOfSlowPowerUps;
 	int numOfBeamPowerUps;
-
-	bool wKeyDown = false;
-	bool aKeyDown = false;
-	bool dKeyDown = false;
-	bool sKeyDown = false;
 };

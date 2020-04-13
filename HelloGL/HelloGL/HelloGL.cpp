@@ -18,6 +18,10 @@ HelloGL::HelloGL(int argc, char* argv[])
 	slowPowerUpActive = false;
 	beamPowerUpActive = false;
 	newHighScore = false;
+	wKeyDown = false;
+	aKeyDown = false;
+	dKeyDown = false;
+	sKeyDown = false;
 	score = 0;
 	scoreTime = 0;
 	powerUpTimer = 10000;

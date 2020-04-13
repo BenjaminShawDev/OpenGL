@@ -8,7 +8,6 @@ Asteroid::Asteroid(Mesh* mesh, Texture2D* texture, float x, float y, float z) : 
 	_position.z = z;
 	_objectAcceleration = 0.1f;
 	powerUpTimer = 5000;
-	slowPowerUpActive = false;
 }
 
 Asteroid::~Asteroid()
