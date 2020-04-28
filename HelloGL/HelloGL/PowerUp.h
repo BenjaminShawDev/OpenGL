@@ -18,7 +18,7 @@ private:
 	Vector3 _position;
 	GLfloat _objectAcceleration;
 	bool slowPowerUpActive;
-	int slowPowerUpTimer;
+	float slowPowerUpTimer;
 
 public:
 	PowerUp(Mesh* mesh, Texture2D* texture, float x, float y, float z);

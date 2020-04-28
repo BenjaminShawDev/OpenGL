@@ -41,8 +41,8 @@ void Asteroid::Draw()
 
 void Asteroid::Update()
 {
-	//_rotation += 0.3f;
-	_rotation += ((rand() % 150) / 100.0f) + 0.1f;
+	_rotation += 0.4f;
+	//_rotation += ((rand() % 150) / 100.0f) + 0.1f;
 	_position.z += _objectAcceleration;
 	_objectAcceleration += 0.0005f;
 

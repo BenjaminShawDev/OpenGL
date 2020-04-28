@@ -35,6 +35,13 @@ HelloGL::HelloGL(int argc, char* argv[])
 HelloGL::~HelloGL(void)
 {
 	delete camera;
+	delete startUpBackground;
+	delete background;
+	delete ship;
+	for (int i = 0; i < 500; i++)
+		delete asteroids[i];
+	for (int i = 0; i < 3; i++)
+		delete powerUps[i];
 }
 
 void HelloGL::InitObjects()
@@ -130,9 +137,9 @@ void HelloGL::InitLighting()
 	_lightPosition->w = 0.0;
 
 	_lightData = new Lighting();
-	_lightData->Ambient.x = 0.2;
-	_lightData->Ambient.y = 0.2;
-	_lightData->Ambient.z = 0.2;
+	_lightData->Ambient.x = 0.3;
+	_lightData->Ambient.y = 0.3;
+	_lightData->Ambient.z = 0.3;
 	_lightData->Ambient.w = 1.0;
 	_lightData->Diffuse.x = 0.8;
 	_lightData->Diffuse.y = 0.8;
@@ -248,6 +255,7 @@ void HelloGL::Update()
 
 	if (startGame && !isPlayerDead && !isPaused)
 	{
+		//Score system
 		scoreTime++;
 		if (scoreTime == 10)
 		{
@@ -256,36 +264,34 @@ void HelloGL::Update()
 			if (speedPowerUpActive)
 				score += 10;
 		}
-	}
 
-	if (!isPlayerDead && !isPaused)
-	{
+		//Movement
 		if (wKeyDown == true)
 		{
 			dynamic_cast<PlayerShip*>(ship)->moveUp();
 			dynamic_cast<PowerUpBeam*>(powerUpBeam)->moveUp();
 		}
 
-		if (aKeyDown == true)
+		else if (aKeyDown == true)
 		{
 			dynamic_cast<PlayerShip*>(ship)->moveLeft();
 			dynamic_cast<PowerUpBeam*>(powerUpBeam)->moveLeft();
 		}
 
-		if (dKeyDown == true)
+		else if (dKeyDown == true)
 		{
 			dynamic_cast<PlayerShip*>(ship)->moveRight();
 			dynamic_cast<PowerUpBeam*>(powerUpBeam)->moveRight();
 		}
 
-		if (sKeyDown == true)
+		else if (sKeyDown == true)
 		{
 			dynamic_cast<PlayerShip*>(ship)->moveDown();
 			dynamic_cast<PowerUpBeam*>(powerUpBeam)->moveDown();
 		}
-	}
 
-	CollisionDetection();
+		CollisionDetection();
+	}
 }
 
 void HelloGL::Keyboard(unsigned char key, int x, int y)
@@ -302,21 +308,23 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 		doRestart = false;
 	if (key == 'q')
 		exit(0);
+
+	//Movement
 	if (startGame && key == 'w')
 		wKeyDown = true;
-	else if (key != 'w')
+	else if (key == 'a' || key == 's' || key == 'd')
 		wKeyDown = false;
 	if (startGame && key == 's')
 		sKeyDown = true;
-	else if (key != 's')
+	else if (key == 'a' || key == 'w' || key == 'd')
 		sKeyDown = false;
 	if (startGame && key == 'a')
 		aKeyDown = true;
-	else if (key != 'a')
+	else if (key == 'w' || key == 's' || key == 'd')
 		aKeyDown = false;
 	if (startGame && key == 'd')
 		dKeyDown = true;
-	else if (key != 'd')
+	else if (key == 'a' || key == 's' || key == 'w')
 		dKeyDown = false;
 }
 
@@ -430,5 +438,11 @@ void HelloGL::RestartGame()
 	isPlayerDead = false;
 	newHighScore = false;
 	doRestart = true;
+	wKeyDown = false;
+	aKeyDown = false;
+	sKeyDown = false;
+	dKeyDown = false;
+
+	system("CLS");
 	InitObjects();
 }

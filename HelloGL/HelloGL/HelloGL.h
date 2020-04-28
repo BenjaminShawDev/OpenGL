@@ -1,6 +1,7 @@
 #pragma once
 #define REFRESHRATE 16
 #include <Windows.h>
+#include <stdlib.h>
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "GL\freeglut.h" //freeglut library
@@ -8,7 +9,6 @@
 #include "Structures.h"
 #include "Asteroid.h"
 #include "MeshLoader.h"
-#include "Pyramid.h"
 #include "PlayerShip.h"
 #include "StarBackground.h"
 #include "StartUpBackground.h"
@@ -60,13 +60,10 @@ private:
 	bool slowPowerUpActive;
 	bool beamPowerUpActive;
 	bool newHighScore;
-	bool wKeyDown;
-	bool aKeyDown;
-	bool dKeyDown;
-	bool sKeyDown;
+	bool wKeyDown, aKeyDown, sKeyDown, dKeyDown;
+	float powerUpTimer;
 	int scoreTime;
 	int score;
-	int powerUpTimer;
 	int numOfSpeedPowerUps;
 	int numOfSlowPowerUps;
 	int numOfBeamPowerUps;

@@ -1,4 +1,4 @@
-5310
-Speed powerups used: 5
-Slow powerups used: 0
-Beam powerups used: 4
+2430
+Speed powerups used: 0
+Slow powerups used: 1
+Beam powerups used: 0
