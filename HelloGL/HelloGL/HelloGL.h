@@ -61,6 +61,7 @@ private:
 	bool beamPowerUpActive;
 	bool newHighScore;
 	bool wKeyDown, aKeyDown, sKeyDown, dKeyDown;
+	bool enableCamera;
 	float powerUpTimer;
 	int scoreTime;
 	int score;

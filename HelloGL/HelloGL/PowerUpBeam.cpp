@@ -1,5 +1,6 @@
 #include "PowerUpBeam.h"
 
+//For the beam model
 PowerUpBeam::PowerUpBeam(Mesh* mesh, Texture2D* texture, float x, float y, float z) : SceneObject (mesh, texture)
 {
 	_position.x = x;

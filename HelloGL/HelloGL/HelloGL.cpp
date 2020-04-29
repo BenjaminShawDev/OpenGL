@@ -1,6 +1,5 @@
 #include "HelloGL.h"
 #include <ctime>
-//#include <iostream>
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
@@ -22,6 +21,7 @@ HelloGL::HelloGL(int argc, char* argv[])
 	aKeyDown = false;
 	dKeyDown = false;
 	sKeyDown = false;
+	enableCamera = false;
 	score = 0;
 	scoreTime = 0;
 	powerUpTimer = 10000;
@@ -38,7 +38,8 @@ HelloGL::~HelloGL(void)
 	delete startUpBackground;
 	delete background;
 	delete ship;
-	for (int i = 0; i < 500; i++)
+	delete powerUpBeam;
+	for (int i = 0; i < 200; i++)
 		delete asteroids[i];
 	for (int i = 0; i < 3; i++)
 		delete powerUps[i];
@@ -66,7 +67,7 @@ void HelloGL::InitObjects()
 	Mesh* AsteroidMesh = MeshLoader::LoadOBJ((char*)"ObjectFiles/Asteroid.obj");
 	Texture2D* texture = new Texture2D();
 	texture->Load((char*)"Textures/Asteroid.raw", 512, 512);
-	for (int i = 0; i < 500; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		asteroids[i] = new Asteroid(AsteroidMesh, texture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 10000) / 10.0f);
 	}
@@ -296,6 +297,7 @@ void HelloGL::Update()
 
 void HelloGL::Keyboard(unsigned char key, int x, int y)
 {
+	//Controls
 	if (startGame == false && key == ' ')
 		startGame = true;
 	if (startGame && !isPaused && !isPlayerDead && key == 'p')
@@ -308,6 +310,11 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 		doRestart = false;
 	if (key == 'q')
 		exit(0);
+	if (key == '0')
+	{
+		enableCamera = true;
+		cout << "Camera movement enabled" << endl;
+	}
 
 	//Movement
 	if (startGame && key == 'w')
@@ -326,10 +333,41 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 		dKeyDown = true;
 	else if (key == 'a' || key == 's' || key == 'w')
 		dKeyDown = false;
+
+	//Camera movement - eye
+	if (enableCamera)
+	{
+		if (key == '2')
+			camera->eye.y += 0.05f;
+		if (key == '8')
+			camera->eye.y -= 0.05f;
+		if (key == '4')
+			camera->eye.x += 0.05f;
+		if (key == '6')
+			camera->eye.x -= 0.05f;
+		if (key == '7')
+			camera->eye.z += 0.2f;
+		if (key == '9')
+			camera->eye.z -= 0.2f;
+		if (key == '1')
+			camera->up.x += 0.1f;
+		if (key == '3')
+			camera->up.x -= 0.1f;
+	}
+
+	//Reset position
+	if (key == '5')
+	{
+		camera->eye.x = 0.0f;
+		camera->eye.y = 0.0f;
+		camera->eye.z = 1.0f;
+		camera->up.x = 0.0f;
+	}
 }
 
 void HelloGL::CollisionDetection()
 {
+	//Ship position
 	float shipXPos = dynamic_cast<PlayerShip*>(ship)->getXPosition();
 	float shipYPos = dynamic_cast<PlayerShip*>(ship)->getYPosition();
 	float shipZPos = dynamic_cast<PlayerShip*>(ship)->getZPosition();
@@ -360,7 +398,7 @@ void HelloGL::CollisionDetection()
 			}
 		}
 
-		//PowerUps
+		//Turning powerups on and off
 		if (speedPowerUpActive == true && powerUpTimer > 0 && !isPaused)
 		{
 			powerUpTimer--;
@@ -392,17 +430,18 @@ void HelloGL::CollisionDetection()
 			beamPowerUpActive = false;
 			powerUpTimer = 10000.0f;
 		}
-
 	}
 
 	for (int i = 0; i < 3; i++)
 	{
+		//Powerup position
 		float powerUpXPos = dynamic_cast<PowerUp*>(powerUps[i])->getXPosition();
 		float powerUpYPos = dynamic_cast<PowerUp*>(powerUps[i])->getYPosition();
 		float powerUpZPos = dynamic_cast<PowerUp*>(powerUps[i])->getZPosition();
 
 		float distance = ((shipXPos - powerUpXPos) * (shipXPos - powerUpXPos) + (shipYPos - powerUpYPos) * (shipYPos - powerUpYPos) + (shipZPos - powerUpZPos) * (shipZPos - powerUpZPos));
 
+		//Tests for collision with player
 		if (distance <= 3.5f && !isPlayerDead)
 		{
 			score += 20;

@@ -37,6 +37,7 @@ void PlayerShip::Draw()
 	}
 }
 
+//Ship movement
 void PlayerShip::moveUp()
 {
 	if (_position.y < 3.7f)
