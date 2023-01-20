@@ -1,16 +1,1 @@
-﻿  HelloGL.cpp
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(6,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(135,25): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(141,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(142,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(143,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(145,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(146,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(147,29): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(149,30): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(150,30): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(151,30): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(159,28): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(159,56): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\HelloGL\HelloGL.cpp(159,84): warning C4305:  '=': truncation from 'double' to 'float'
-  HelloGL.vcxproj -> C:\Users\Ben\OneDrive - Staffordshire University\FOGGS\S2FOGGS\HelloGL\Debug\HelloGL.exe
+﻿  HelloGL.vcxproj -> C:\Users\webby\Documents\GitHub\OpenGL\HelloGL\Debug\HelloGL.exe
